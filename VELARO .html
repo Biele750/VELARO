@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VELARO – dyfuzor zapachu bez wody</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0d11;--bg2:#161a22;--fg:#f1f2f4;--mut:#a3a9b4;--card:rgba(16,19,25,.66);--bd:rgba(255,255,255,.13);--ac:#c9d3ff;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#e9ecf1;--bg2:#d5dae3;--fg:#0f1218;--mut:#525a68;--card:rgba(255,255,255,.72);--bd:rgba(0,0,0,.1);--ac:#33449e;color-scheme:light}}
+:root[data-theme="dark"]{--bg:#0b0d11;--bg2:#161a22;--fg:#f1f2f4;--mut:#a3a9b4;--card:rgba(16,19,25,.66);--bd:rgba(255,255,255,.13);--ac:#c9d3ff;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(120% 70% at 50% 0%,var(--bg2),var(--bg) 70%) fixed;color:var(--fg);font:16px/1.55 "Avenir Next","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block}
+main{position:relative;z-index:1}
+section{padding:16vh 18px 4vh;max-width:560px;margin:0 auto}
+.h{min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;padding:7vh 22px 5vh;text-align:center}
+h1{margin:0;font-size:clamp(40px,14vw,64px);font-weight:200;letter-spacing:.34em;text-indent:.34em}
+.h p{margin:10px auto 0;color:var(--mut);max-width:30ch;font-size:17px}
+h2{font-size:clamp(26px,8vw,34px);font-weight:300;line-height:1.15;margin:0 0 12px;letter-spacing:-.01em}
+.c{background:var(--card);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--bd);border-radius:26px;padding:24px 22px;margin-bottom:14px}
+.c p{margin:0 0 10px;color:var(--mut)}.c p:last-child{margin:0}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.b{display:inline-block;padding:14px 24px;border-radius:999px;border:1px solid var(--bd);color:var(--fg);text-decoration:none;font-weight:500;background:var(--card);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.b.p{background:var(--fg);color:var(--bg);border-color:transparent}
+.b:focus-visible,.sw:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
+.f{display:grid;gap:14px}
+.f div{display:grid;grid-template-columns:auto 1fr;gap:2px 14px;align-items:baseline}
+.f b{font-size:22px;font-weight:300;grid-row:span 2;min-width:3.4ch;color:var(--ac)}
+.f span{font-weight:600}.f i{font-style:normal;color:var(--mut);font-size:14px}
+.sp{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--bd);border-radius:18px;overflow:hidden;margin-top:6px}
+.sp div{background:var(--card);padding:14px 14px;-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.sp div.w{grid-column:span 2}
+.sp small{display:block;color:var(--mut);font-size:13px}.sp strong{font-weight:500;font-size:17px}
+.cl{display:flex;gap:14px;justify-content:center;margin:16px 0 4px}
+.sw{width:64px;text-align:center;background:none;border:0;color:var(--mut);font:inherit;font-size:14px;cursor:pointer;padding:0}
+.sw i{display:block;width:52px;height:52px;border-radius:50%;margin:0 auto 6px;border:2px solid var(--bd);box-shadow:inset 0 -6px 12px rgba(0,0,0,.35)}
+.sw[aria-pressed="true"]{color:var(--fg)}.sw[aria-pressed="true"] i{border-color:var(--fg)}
+.ok li,.no li{margin:0 0 8px;color:var(--mut)}ul{padding-left:20px;margin:8px 0 0}
+.ok li::marker{color:var(--ac)}
+footer{position:relative;z-index:1;text-align:center;color:var(--mut);font-size:13px;padding:6vh 20px 8vh}
+.r{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}.r.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.r{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+#ol{position:fixed;inset:0;z-index:20;overflow-y:auto;overscroll-behavior:contain;display:none;--bg:#0a090b;--fg:#f3eee6;--mut:#a79f94;--card:rgba(255,255,255,.045);--bd:rgba(255,255,255,.12);--a:#c98a2b;color:var(--fg);background:radial-gradient(90% 50% at 50% 14%,color-mix(in srgb,var(--a) 34%,transparent),transparent 72%) no-repeat,var(--bg);font:300 16px/1.5 Jost,"Avenir Next",system-ui,sans-serif}
+#ol.on{display:block}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) #ol{--bg:#f2eee8;--fg:#17120d;--mut:#6c6358;--card:rgba(0,0,0,.04);--bd:rgba(0,0,0,.12)}}
+#ol *{box-sizing:border-box}
+#ol .top{position:sticky;top:0;padding-top:env(safe-area-inset-top,0px);z-index:5;background:linear-gradient(var(--bg) 90%,transparent);padding-bottom:8px}
+#ol #gl2{display:block;width:100%;height:40svh;touch-action:pan-y}
+#ol .bk{position:absolute;left:16px;top:calc(12px + env(safe-area-inset-top,0px));z-index:2;color:var(--mut);text-decoration:none;font-size:14px}
+#ol .nm{text-align:center;padding:0 16px}
+#ol .nm small{color:var(--mut);font-size:13px;letter-spacing:.14em}
+#ol .nm h2{font:500 clamp(34px,10.5vw,46px)/1 "Cormorant Garamond",Didot,Georgia,serif;margin:4px 0 6px}
+#ol .nm p{margin:0;color:var(--mut);font-size:15px}
+#ol .ch{display:flex;gap:8px;overflow-x:auto;padding:14px 16px 2px;scrollbar-width:none}.ch::-webkit-scrollbar{display:none}
+#ol .ch button{flex:none;border:1px solid var(--bd);background:none;color:var(--mut);padding:8px 16px;border-radius:999px;font:inherit;font-size:14px;cursor:pointer}
+#ol .ch button[aria-pressed="true"]{color:var(--bg);background:var(--fg);border-color:transparent}
+#ol #ls{padding:10px 16px 130px;max-width:560px;margin:0 auto;display:grid;gap:10px}
+#ol .k{display:flex;gap:14px;align-items:center;text-align:left;width:100%;background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:14px 16px;color:var(--fg);font:inherit;cursor:pointer}
+#ol .k i{width:40px;height:40px;border-radius:50%;flex:none;box-shadow:inset 0 -9px 14px rgba(0,0,0,.4),inset 0 5px 8px rgba(255,255,255,.25)}
+#ol .k b{display:block;font:500 22px/1.1 "Cormorant Garamond",Didot,Georgia,serif}
+#ol .k em{font-style:normal;color:var(--mut);font-size:13px}
+#ol .k small{display:block;color:var(--mut);font-size:14px;margin-top:2px}
+#ol .k[aria-pressed="true"]{border-color:var(--a);box-shadow:0 0 0 1px var(--a)}
+#ol .k[hidden]{display:none}
+#ol .k:focus-visible,#ol .ch button:focus-visible,#ol .cta a:focus-visible{outline:2px solid var(--a);outline-offset:3px}
+#ol .cta{position:fixed;left:0;right:0;bottom:0;z-index:6;display:flex;justify-content:center;padding:26px 16px calc(14px + env(safe-area-inset-bottom,0px));background:linear-gradient(transparent,var(--bg) 45%)}
+#ol .cta a{display:block;width:100%;max-width:520px;text-align:center;padding:16px 22px;border-radius:999px;background:var(--fg);color:var(--bg);text-decoration:none;font-weight:500}
+#ol .bk{background:none;border:0;font:inherit;font-size:14px;padding:6px 0;cursor:pointer}
+</style>
+</head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<main>
+<section class="h">
+  <div><h1>VELARO</h1><p>Zapach, który unosi się sam. Bez wody.</p></div>
+  <div class="btns"><a class="b p" href="#dzialanie">Poznaj dyfuzor</a><a class="b" href="#kolekcja" data-ol>Olejki</a></div>
+</section>
+
+<section id="dzialanie" class="r">
+  <h2>Czysty olejek, drobna mgiełka</h2>
+  <div class="c"><p>Dyfuzor VELARO rozpyla olejek eteryczny metodą atomizacji dwufazowej. Nie wlewasz wody, więc zapach jest czysty i intensywny, a powietrze nie robi się wilgotne.</p></div>
+  <div class="c f">
+    <div><b>0 ml</b><span>Wody</span><i>Olejek trafia do urządzenia bezpośrednio.</i></div>
+    <div><b>&lt;30</b><span>Decybeli</span><i>Działa praktycznie bezgłośnie.</i></div>
+    <div><b>50 m³</b><span>Zasięg</span><i>Wypełnia salon, sypialnię lub wnętrze auta.</i></div>
+    <div><b>1</b><span>Przycisk</span><i>Włączasz i zmieniasz tryb jednym dotknięciem.</i></div>
+  </div>
+</section>
+
+<section class="r">
+  <h2>Do domu i do samochodu</h2>
+  <div class="c"><p>Zasilanie DC 5 V i niewielki rozmiar sprawiają, że dyfuzor mieści się w uchwycie na kubek. Postawisz go na komodzie, a rano zabierzesz do auta.</p></div>
+</section>
+
+<section id="spec" class="r">
+  <h2>Specyfikacja</h2>
+  <div class="sp">
+    <div><small>Materiał</small><strong>Metal</strong></div>
+    <div><small>Napięcie</small><strong>DC 5 V</strong></div>
+    <div><small>Moc</small><strong>2 W</strong></div>
+    <div><small>Hałas</small><strong>&lt; 30 dB</strong></div>
+    <div><small>Waga</small><strong>0,6 kg</strong></div>
+    <div><small>Pojemność</small><strong>20 ml</strong></div>
+    <div class="w"><small>Wymiary</small><strong>11,2 × 10,3 × 23,5 cm</strong></div>
+    <div><small>Obszar zastosowania</small><strong>50 m³</strong></div>
+    <div><small>Obsługa</small><strong>Przycisk</strong></div>
+    <div class="w"><small>Funkcja</small><strong>Atomizacja dwufazowa</strong></div>
+  </div>
+</section>
+
+<section class="r">
+  <h2>Wybierz wykończenie</h2>
+  <div class="c" style="text-align:center">
+    <p>Dotknij koloru, a model obok zmieni wykończenie.</p>
+    <div class="cl" role="group" aria-label="Kolor dyfuzora">
+      <button class="sw" data-c="#cfd2d8" aria-pressed="true"><i style="background:#cfd2d8"></i>Srebrny</button>
+      <button class="sw" data-c="#1d1e22" aria-pressed="false"><i style="background:#1d1e22"></i>Czarny</button>
+      <button class="sw" data-c="#c9a65e" aria-pressed="false"><i style="background:#c9a65e"></i>Złoty</button>
+    </div>
+  </div>
+</section>
+
+<section id="olejki" class="r">
+  <h2>Jakie olejki wybrać?</h2>
+  <div class="c ok"><strong>Polecamy</strong>
+    <ul><li>Olejowe olejki eteryczne o dobrej płynności.</li><li>Wlewanie bezpośrednio do urządzenia, bez dodawania wody.</li></ul></div>
+  <div class="c no"><strong>Unikaj</strong>
+    <ul><li>Olejków o zbyt wysokim stężeniu.</li><li>Olejków o zbyt gęstej konsystencji.</li></ul></div>
+  <div class="c"><p>Nie wiesz, który olejek kupić? Wybierz jeden z naszych, dobrany do tego urządzenia.</p>
+    <div class="btns" style="justify-content:flex-start;margin-top:12px"><a class="b p" href="#kolekcja" data-ol>Kup olejki VELARO</a></div></div>
+</section>
+</main>
+<footer>© VELARO. Dyfuzory zapachu bez wody.</footer>
+
+<div id="ol" role="dialog" aria-label="Kolekcja zapachów">
+<header class="top">
+  <button class="bk" id="cl" type="button">‹ Dyfuzor</button>
+  <canvas id="gl2" aria-label="Trójwymiarowy flakon VELARO"></canvas>
+  <div class="nm"><small>VELARO, kolekcja 20 zapachów</small><h2 id="n">Ambra Regale</h2><p id="t">Bursztyn, szafran, wanilia</p></div>
+  <nav class="ch" id="ch" aria-label="Rodziny zapachów"></nav>
+</header>
+<main id="ls"></main>
+<div class="cta"><a id="buy" href="#" onclick="return false">Zamów wybrany zapach</a></div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+var io;try{io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('in')})},{threshold:.12});document.querySelectorAll('.r').forEach(function(e){io.observe(e)})}catch(e){document.querySelectorAll('.r').forEach(function(e){e.classList.add('in')})}
+try{
+var cv=document.getElementById('gl'),R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+R.setPixelRatio(Math.min(devicePixelRatio||1,2));R.outputEncoding=THREE.sRGBEncoding;
+var S=new THREE.Scene(),C=new THREE.PerspectiveCamera(32,1,.1,60);C.position.set(0,.4,11);
+/* environment for metal reflections */
+var pm=new THREE.PMREMGenerator(R),es=new THREE.Scene(),g=document.createElement('canvas');g.width=2;g.height=256;
+var x=g.getContext('2d'),gr=x.createLinearGradient(0,0,0,256);gr.addColorStop(0,'#ffffff');gr.addColorStop(.45,'#8b93a8');gr.addColorStop(1,'#2a2e38');x.fillStyle=gr;x.fillRect(0,0,2,256);
+es.add(new THREE.Mesh(new THREE.SphereGeometry(10,32,16),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(g),side:THREE.BackSide})));
+[[-6,1,3],[6,2,-1],[0,3,-6]].forEach(function(p){var m=new THREE.Mesh(new THREE.BoxGeometry(1.2,8,3),new THREE.MeshBasicMaterial());m.material.color.setScalar(4);m.position.set(p[0],p[1],p[2]);es.add(m)});
+S.environment=pm.fromScene(es,.03).texture;
+S.add(new THREE.AmbientLight(0xffffff,.45));var dl=new THREE.DirectionalLight(0xffffff,1.1);dl.position.set(3,5,6);S.add(dl);
+/* ribbed bump texture */
+var tc=document.createElement('canvas');tc.width=1024;tc.height=8;var t2=tc.getContext('2d');t2.fillStyle='#777';t2.fillRect(0,0,1024,8);t2.fillStyle='#fff';for(var i=0;i<1024;i+=8)t2.fillRect(i,0,5,8);
+var bump=new THREE.CanvasTexture(tc);bump.wrapS=bump.wrapT=THREE.RepeatWrapping;
+var col=new THREE.Color('#cfd2d8');
+var M=new THREE.MeshStandardMaterial({color:col,metalness:.9,roughness:.3,bumpMap:bump,bumpScale:2});
+var Ms=new THREE.MeshStandardMaterial({color:col,metalness:1,roughness:.16});
+var K=new THREE.MeshStandardMaterial({color:0x121316,metalness:.4,roughness:.45});
+var D=new THREE.Group();
+function cy(a,b,h,y,m,s){var o=new THREE.Mesh(new THREE.CylinderGeometry(a,b,h,s||96),m);o.position.y=y;D.add(o)}
+cy(1.03,1,.1,-1.75,K);cy(1,1,1.84,-.78,M);cy(1.013,1.013,.05,.16,Ms);cy(1,1,1.56,.97,M);cy(.98,.98,.06,1.78,K);cy(.62,.64,.5,2.06,K,48);cy(.78,.62,.14,2.38,Ms,64);
+/* mist */
+var lite=matchMedia('(prefers-color-scheme:light)').matches&&document.documentElement.getAttribute('data-theme')!=='dark';
+function puff(){var c=document.createElement('canvas');c.width=c.height=128;var q=c.getContext('2d');for(var k=0;k<16;k++){var px=64+(Math.random()-.5)*50,py=64+(Math.random()-.5)*50,r=18+Math.random()*26,gg=q.createRadialGradient(px,py,0,px,py,r);gg.addColorStop(0,'rgba(255,255,255,.3)');gg.addColorStop(1,'rgba(255,255,255,0)');q.fillStyle=gg;q.fillRect(0,0,128,128)}q.globalCompositeOperation='destination-in';var m=q.createRadialGradient(64,64,0,64,64,64);m.addColorStop(0,'#000');m.addColorStop(.7,'rgba(0,0,0,.6)');m.addColorStop(1,'rgba(0,0,0,0)');q.fillStyle=m;q.fillRect(0,0,128,128);return new THREE.CanvasTexture(c)}
+var tx=[puff(),puff(),puff(),puff()],N=150,sp=[],wp=[],tint=lite?0x7d889e:0xe4eaf6;
+for(i=0;i<N;i++){var sm=new THREE.Sprite(new THREE.SpriteMaterial({map:tx[i%4],color:tint,transparent:true,opacity:0,depthWrite:false}));sm.userData={l:Math.random(),a:Math.random()*6.28,v:.7+Math.random()*.6,rot:(Math.random()-.5)*.6};S.add(sm);sp.push(sm)}
+for(i=0;i<7;i++){var wsp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx[i%4],color:tint,transparent:true,opacity:.07,depthWrite:false}));wsp.scale.setScalar(9+Math.random()*5);wsp.position.set((Math.random()-.5)*14,(Math.random()-.5)*10,-4);wsp.userData={s:.12+Math.random()*.15};S.add(wsp);wp.push(wsp)}
+S.add(D);
+/* colour switch */
+var sw=document.querySelectorAll('.sw');sw.forEach(function(b){b.addEventListener('click',function(){col.set(b.getAttribute('data-c'));sw.forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false')});M.needsUpdate=Ms.needsUpdate=true})});
+function sz(){var w=innerWidth,h=innerHeight;R.setSize(w,h,false);C.aspect=w/h;C.position.z=w/h<.8?13:11;C.updateProjectionMatrix()}
+addEventListener('resize',sz);sz();
+var cur=0,last=performance.now(),T=0,still=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function tick(now){requestAnimationFrame(tick);if(document.getElementById('ol').classList.contains('on')){last=now;return}var dt=Math.min((now-last)/1000,.05);last=now;T+=dt;
+ var mx=Math.max(1,document.documentElement.scrollHeight-innerHeight),p=Math.min(1,Math.max(0,scrollY/mx));
+ cur+=(p-cur)*.07;
+ D.rotation.y=.55+cur*Math.PI*2.2;
+ D.position.y=-.55;D.position.x=Math.sin(cur*Math.PI*3)*.35;
+ D.scale.setScalar(1-Math.sin(cur*Math.PI)*.1);
+ var sd=still?0:dt,ox=D.position.x,oy=D.position.y+2.5*D.scale.x;
+ for(var i=0;i<N;i++){var q=sp[i],u=q.userData;u.l+=sd*.13*u.v;if(u.l>1){u.l-=1;u.a=Math.random()*6.28}var l=u.l;
+  q.position.set(ox+Math.sin(T*.7+u.a*3)*.5*l*l+Math.cos(u.a)*.35*l,oy+l*4.4,Math.sin(u.a)*.3*l);
+  q.scale.setScalar(.6+l*3.4);q.material.rotation=u.a+T*u.rot*.3;q.material.opacity=Math.min(l*6,1)*(1-l)*.3}
+ for(i=0;i<7;i++){var w=wp[i];w.position.x+=w.userData.s*sd;if(w.position.x>9)w.position.x=-9;w.material.rotation=T*.03*(i%2?1:-1)}
+ R.render(S,C)}
+requestAnimationFrame(tick);
+}catch(e){document.getElementById('gl').style.display='none'}
+})();
+</script>
+<script>
+window.initOl=function(){
+var L="Ambra Regale|Orientalne|Bursztyn, szafran, wanilia|#c98a2b;Oud Mistral|Orientalne|Oud, róża, kadzidło|#6a2233;Velvet Saffron|Orientalne|Szafran, irys, białe piżmo|#d1572a;Noir Tonka|Orientalne|Tonka, tytoń, rum|#4a2c1b;Cèdre Nocturne|Drzewne|Cedr, wetyweria, bergamotka|#8a5a32;Santal Silk|Drzewne|Sandałowiec, kardamon, mleko kokosowe|#dcbd8c;Forêt Obscure|Drzewne|Paczula, mech dębowy, jałowiec|#244a38;Vétiver Royal|Drzewne|Wetyweria, grejpfrut, czarny pieprz|#7f9150;Rose Absolue|Kwiatowe|Róża damasceńska, malina, paczula|#b3203f;Jasmin Éclat|Kwiatowe|Jaśmin, ylang, białe piżmo|#ead7a8;Iris Poudré|Kwiatowe|Irys, fiołek, puder|#8f84bd;Tubéreuse Noire|Kwiatowe|Tuberoza, gardenia, skóra|#55235a;Bergamot Glacé|Świeże|Bergamotka, cytryna, biała herbata|#cfdc70;Aqua Marine|Świeże|Sól morska, szałwia, szara ambra|#2f93ad;Figue Blanche|Świeże|Figa, mleczko figowe, cedr|#96b57e;Néroli Soleil|Świeże|Neroli, pomarańcza, miód|#f1a23e;Cuir Impérial|Skórzane|Skóra, szafran, kadzidło|#7a4325;Tabac Doré|Skórzane|Tytoń, miód, wanilia|#b0792f;Daim Rouge|Skórzane|Zamsz, róża, pieprz|#a23d2c;Mocha Noire|Skórzane|Kawa, kakao, karmel|#573423".split(";").map(function(s){return s.split("|")});
+var F=["Wszystkie","Orientalne","Drzewne","Kwiatowe","Świeże","Skórzane"],ls=document.getElementById('ls'),ch=document.getElementById('ch'),upd=function(){};
+ls.innerHTML=L.map(function(d,i){return '<button class="k" data-i="'+i+'" aria-pressed="false"><i style="background:'+d[3]+'"></i><span><b>'+d[0]+'</b><em>'+d[1]+'</em><small>'+d[2]+'</small></span></button>'}).join('');
+ch.innerHTML=F.map(function(f,i){return '<button data-f="'+i+'" aria-pressed="'+(i==0)+'">'+f+'</button>'}).join('');
+var cards=ls.children;
+function pick(i){var d=L[i];document.getElementById('ol').style.setProperty('--a',d[3]);document.getElementById('n').textContent=d[0];document.getElementById('t').textContent=d[2];for(var k=0;k<cards.length;k++)cards[k].setAttribute('aria-pressed',k==i?'true':'false');upd(d)}
+ls.addEventListener('click',function(e){var b=e.target.closest('.k');if(b)pick(+b.getAttribute('data-i'))});
+ch.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var f=+b.getAttribute('data-f');[].forEach.call(ch.children,function(c){c.setAttribute('aria-pressed',c===b?'true':'false')});for(var k=0;k<cards.length;k++)cards[k].hidden=f>0&&L[k][1]!=F[f]});
+try{
+var cv=document.getElementById('gl2'),R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});R.setPixelRatio(Math.min(devicePixelRatio||1,2));R.outputEncoding=THREE.sRGBEncoding;
+var S=new THREE.Scene(),C=new THREE.PerspectiveCamera(30,1,.1,50);C.position.set(0,.45,9);C.lookAt(0,.45,0);
+var pm=new THREE.PMREMGenerator(R),es=new THREE.Scene(),g=document.createElement('canvas');g.width=2;g.height=256;var x=g.getContext('2d'),gr=x.createLinearGradient(0,0,0,256);gr.addColorStop(0,'#ffffff');gr.addColorStop(.45,'#8b93a8');gr.addColorStop(1,'#2a2e38');x.fillStyle=gr;x.fillRect(0,0,2,256);
+es.add(new THREE.Mesh(new THREE.SphereGeometry(10,32,16),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(g),side:THREE.BackSide})));
+[[-6,1,3],[6,2,-1],[0,3,-6],[3,2,6]].forEach(function(p){var m=new THREE.Mesh(new THREE.BoxGeometry(1.2,8,3),new THREE.MeshBasicMaterial());m.material.color.setScalar(4);m.position.set(p[0],p[1],p[2]);es.add(m)});
+S.environment=pm.fromScene(es,.03).texture;S.add(new THREE.AmbientLight(0xffffff,.4));var dl=new THREE.DirectionalLight(0xffffff,1);dl.position.set(3,5,6);S.add(dl);
+var Lc=new THREE.Color(L[0][3]),tc=Lc.clone();
+var GL=new THREE.MeshPhysicalMaterial({color:0xffffff,metalness:0,roughness:.04,transparent:true,opacity:.26,envMapIntensity:1.7,clearcoat:1,depthWrite:false});
+var LM=new THREE.MeshStandardMaterial({color:Lc,emissive:Lc,emissiveIntensity:.35,roughness:.15,metalness:.1});
+var GO=new THREE.MeshStandardMaterial({color:0xd4af6a,metalness:1,roughness:.2});
+var B=new THREE.Group();
+function cy(a,b,h,y,m,s,o){var e=new THREE.Mesh(new THREE.CylinderGeometry(a,b,h,s||64),m);e.position.y=y;(o||B).add(e);return e}
+cy(.82,.82,1.55,-.1,LM);cy(.92,.92,.3,-1.05,GL);cy(.9,.9,1.9,.05,GL);cy(.34,.34,.3,1.15,GO,32);cy(.5,.5,.75,1.7,GO,48);cy(.46,.5,.08,2.12,GO,48);
+var lc=document.createElement('canvas');lc.width=512;lc.height=320;var lt=new THREE.CanvasTexture(lc);lt.anisotropy=4;
+var lab=new THREE.Mesh(new THREE.CylinderGeometry(.915,.915,1.0,48,1,true,-.8,1.6),new THREE.MeshStandardMaterial({map:lt,roughness:.5,metalness:.2}));lab.position.y=-.05;B.add(lab);
+function paint(d){var q=lc.getContext('2d');q.fillStyle='#0c0b0d';q.fillRect(0,0,512,320);q.strokeStyle='#c9a65e';q.lineWidth=3;q.strokeRect(14,14,484,292);q.textAlign='center';q.fillStyle='#c9a65e';q.font='400 28px Jost,sans-serif';q.fillText('V E L A R O',256,80);q.fillStyle='#f3eee6';q.font='500 52px "Cormorant Garamond",Georgia,serif';q.fillText(d[0],256,175);q.fillStyle='#a79f94';q.font='300 26px Jost,sans-serif';q.fillText(d[1].toLowerCase()+', olejek zapachowy',256,235);lt.needsUpdate=true}
+paint(L[0]);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){paint(L[cur])});
+S.add(B);
+var N=60,sp=new Float32Array(N*3);for(var i=0;i<N;i++){var a=Math.random()*6.28,r=1.8+Math.random()*.9,h=Math.random()*3.6-1.3;sp[i*3]=Math.cos(a)*r;sp[i*3+1]=h;sp[i*3+2]=Math.sin(a)*r}
+var pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(sp,3));
+var mc=document.createElement('canvas');mc.width=mc.height=32;var mx=mc.getContext('2d'),mg=mx.createRadialGradient(16,16,0,16,16,16);mg.addColorStop(0,'rgba(255,255,255,1)');mg.addColorStop(1,'rgba(255,255,255,0)');mx.fillStyle=mg;mx.fillRect(0,0,32,32);
+var SP=new THREE.Points(pg,new THREE.PointsMaterial({size:.14,map:new THREE.CanvasTexture(mc),color:0xe6c680,transparent:true,opacity:.8,depthWrite:false,blending:THREE.AdditiveBlending}));S.add(SP);
+var cur=0,T=0,last=performance.now(),rot=.4,tr=.4,pulse=0,drag=0,lx=0,still=matchMedia('(prefers-reduced-motion:reduce)').matches;
+upd=function(d){cur=L.indexOf(d);tc.set(d[3]);paint(d);pulse=1;tr+=Math.PI*.6};
+cv.addEventListener('pointerdown',function(e){drag=1;lx=e.clientX;try{cv.setPointerCapture(e.pointerId)}catch(_){}});
+cv.addEventListener('pointermove',function(e){if(drag){tr+=(e.clientX-lx)*.012;lx=e.clientX}});
+['pointerup','pointercancel'].forEach(function(n){cv.addEventListener(n,function(){drag=0})});
+function sz(){var w=cv.clientWidth,h=cv.clientHeight;R.setSize(w,h,false);C.aspect=w/h;C.position.z=w/h<.9?11:9;C.updateProjectionMatrix()}
+addEventListener('resize',sz);sz();
+function tick(now){requestAnimationFrame(tick);if(!document.getElementById('ol').classList.contains('on')){last=now;return}var dt=Math.min((now-last)/1000,.05);last=now;T+=dt;
+ if(!drag&&!still)tr+=dt*.3;rot+=(tr-rot)*.1;B.rotation.y=rot;B.position.y=still?0:Math.sin(T*.9)*.07;
+ pulse*=.92;B.scale.setScalar(1+pulse*.07);Lc.lerp(tc,.08);LM.color.copy(Lc);LM.emissive.copy(Lc);
+ SP.rotation.y=still?0:T*.12;SP.position.y=.45*0+Math.sin(T*.6)*.05;
+ R.render(S,C)}
+requestAnimationFrame(tick);
+}catch(e){document.getElementById('gl2').style.display='none'}
+pick(0);
+};
+</script>
+<script>
+(function(){var ol=document.getElementById('ol');
+document.querySelectorAll('[data-ol]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();ol.classList.add('on');document.body.style.overflow='hidden';ol.scrollTop=0;if(!window.oilsInit){window.oilsInit=1;try{window.initOl()}catch(x){}}})});
+document.getElementById('cl').addEventListener('click',function(){ol.classList.remove('on');document.body.style.overflow=''})})();
+</script>
+</body>
+</html>
